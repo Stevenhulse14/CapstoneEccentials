@@ -1,14 +1,12 @@
 import React from "react";
 import { Routes as R, Route } from "react-router-dom";
-import { Home, Login, Register, AuthWrapper } from "./";
+import { Home, Login, Register, AuthWrapper, SingleItem } from "./";
 
 function Routes({ isLoggedIn, handleLogin }) {
   return (
     <R>
-      <Route
-        path="/"
-        element={<Home isLoggedIn={isLoggedIn} handleLogin={handleLogin} />}
-      />
+      <Route path="/" element={<Home />} />
+      <Route path="/item/:id" element={<SingleItem />} />
       <Route
         path="/login"
         element={

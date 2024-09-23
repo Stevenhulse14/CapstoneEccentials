@@ -1,44 +1,14 @@
-import React, { useState } from "react";
-import { Login, Register, AuthWrapper } from "./";
+import React from "react";
+import { AllItems } from "./";
 
-function Home({ isLoggedIn, handleLogin }) {
-  const [isLoginForm, setIsLoginForm] = useState(true);
-
+function Home() {
   return (
-    <AuthWrapper title="Welcome to Our App">
-      {!isLoggedIn && (
-        <>
-          <div className="flex justify-center mb-6">
-            <button
-              className={`px-4 py-2 font-semibold rounded-l-lg transition-colors ${
-                isLoginForm
-                  ? "bg-keppel text-white"
-                  : "bg-onyx text-platinum hover:bg-timberwolf hover:text-onyx"
-              }`}
-              onClick={() => setIsLoginForm(true)}
-            >
-              Login
-            </button>
-            <button
-              className={`px-4 py-2 font-semibold rounded-r-lg transition-colors ${
-                !isLoginForm
-                  ? "bg-keppel text-white"
-                  : "bg-onyx text-platinum hover:bg-timberwolf hover:text-onyx"
-              }`}
-              onClick={() => setIsLoginForm(false)}
-            >
-              Register
-            </button>
-          </div>
-          {isLoginForm ? (
-            <Login handleLogin={handleLogin} />
-          ) : (
-            <Register handleLogin={handleLogin} />
-          )}
-        </>
-      )}
-      {isLoggedIn && <p>Welcome! You are logged in.</p>}
-    </AuthWrapper>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-keppel">
+        Welcome to Our Store
+      </h1>
+      <AllItems />
+    </div>
   );
 }
 
