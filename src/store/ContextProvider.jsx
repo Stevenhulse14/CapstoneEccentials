@@ -4,21 +4,52 @@ import { users, products } from "../data";
 export const StoreProvider = createContext();
 
 const initialState = {
-  user: [...users],
-  products: [...products],
+  users,
+  products,
+  cart: [],
 };
 
-const reducer = (state, action) => {
+function reducer(state, action) {
   switch (action.type) {
-    case "SET_USER":
-      return { ...state, user: action.payload };
-    case "SET_PRODUCTS":
-      return { ...state, products: action.payload };
+    case "ADD_TO_CART":
+      const existingItem = state.cart.find(
+        (item) => item.id === action.payload.id
+      );
+      if (existingItem) {
+        return {
+          ...state,
+          cart: state.cart.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cart: [...state.cart, { ...action.payload, quantity: 1 }],
+        };
+      }
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== action.payload),
+      };
+    case "UPDATE_QUANTITY":
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, quantity: action.payload.quantity }
+            : item
+        ),
+      };
     default:
       return state;
   }
-};
-export const ContextProvider = ({ children }) => {
+}
+
+export function ContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
@@ -26,4 +57,4 @@ export const ContextProvider = ({ children }) => {
       {children}
     </StoreProvider.Provider>
   );
-};
+}

@@ -6,3 +6,4 @@ export { default as Navbar } from "./Navbar";
 export { default as AuthWrapper } from "./AuthWrapper";
 export { default as AllItems } from "./AllItems";
 export { default as SingleItem } from "./SingleItem";
+export { default as Cart } from "./Cart";

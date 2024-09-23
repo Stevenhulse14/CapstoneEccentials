@@ -3,18 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { StoreProvider } from "../store/ContextProvider";
 
 function AllItems() {
-  const {
-    state: { users, products },
-  } = useContext(StoreProvider);
+  const { state, dispatch } = useContext(StoreProvider);
   const navigate = useNavigate();
 
   const handleItemClick = (id) => {
     navigate(`/item/${id}`);
   };
 
+  const addToCart = (e, product) => {
+    e.stopPropagation();
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {products.map((product) => (
+      {state.products.map((product) => (
         <div
           key={product.id}
           className="bg-platinum p-4 rounded-lg shadow-md cursor-pointer"
@@ -30,10 +33,7 @@ function AllItems() {
           <p className="text-keppel font-bold">${product.price.toFixed(2)}</p>
           <button
             className="mt-4 bg-saffron text-onyx px-4 py-2 rounded hover:bg-keppel hover:text-platinum transition-colors"
-            onClick={(e) => {
-              e.stopPropagation();
-              // Add to cart logic here
-            }}
+            onClick={(e) => addToCart(e, product)}
           >
             Add to Cart
           </button>
